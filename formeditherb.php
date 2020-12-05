@@ -1,0 +1,195 @@
+<!doctype php>
+<php lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!--========Bootstap===================-->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--=========Bootstap======================-->
+ 
+  <body>
+    <!--=============Navbar============================-->
+<nav class="navbar navbar-expand-lg navbar-light fixed-top "style="background-color:#9370db;">
+  <a class="navbar-brand" href="admin.php">
+
+     <!-- Image and text -->
+    <img src="asset/images/pnru_logo.png" width="50" height="55" alt="" loading="lazy">
+    <img src="asset/images/logo.png" width="50" height="55" alt="" loading="lazy"></a>
+ <!-- Image and text -->
+
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+<div class="container">
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <div class="navbar-nav ml-auto">
+
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" style="color: white;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Admin
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="indexadmin.php">หน้าต่าง Admin</a>
+          <div class="dropdown-divider"></div>
+           <a class="dropdown-item" href="formherb.php">เพิ่มข้อมูลสมุนไพร</a>
+            <a class="dropdown-item" href="formlocation.php">เพิ่มข้อมูลพิกัด</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="showtableherbadmin.php">ดูตารางพืชสมุนไพร</a>
+          <a class="dropdown-item" href="showtablelocation.php">ดูตารางพิกัด</a>
+          <a class="dropdown-item" href="reportherbadmin.php">แก้ไข/ลบพืชสมุนไพร</a>
+           <a class="dropdown-item" href="reportlocationadmin.php">แก้ไข/ลบพิกัด</a>
+        </div>
+      </li>
+      <a class="nav-link" style="color: white;" href="logout.php">Sign Out</a>
+      </li>
+    </div>
+  </div>
+</div>
+</nav>
+<!--===========Navbar=========================-->
+
+</br></br></br></br>
+
+<!--=======H2 and formherb================-->
+
+
+
+
+ <div class="container">
+    <h1 >แก้ไขข้อมูล</h1>
+    <form action="editherb.php" method="post">
+    <input type="text" value=".$ID." hidden>
+    <?php
+    //รับ parameter มาเก็บในตัวแปร ID
+    $ID=$_GET["ID"];
+    //1. เชื่อมต่อ database: 
+    include('connection.php');  //ไฟล์เชื่อมต่อกับ database ที่เราได้สร้างไว้ก่อนหน้าน้ี
+    //2. query ข้อมูลจากตาราง plant: 
+    $query = "SELECT * FROM `herb` WHERE `HerbID` = '".$ID."'" or die("Error:" . mysqli_error());
+    //3.เก็บข้อมูลที่ query ออกมาไว้ในตัวแปร result . 
+    $result = mysqli_query($conn,$query);
+    // จะแก้โดยการ เอาตัวแปร id แสดงรหัสและตักคำไป query มาจากฐานข้อมูล
+    while ($row = mysqli_fetch_array($result)) {
+        echo "
+      <div class='form-group'>
+    <label for='HerbID'>HerbID</label>
+    <input type='text'class='form-control'name='HerbID' value=".$row['HerbID'].">
+      </div>
+<div class='form-group'>
+    <label for='HerbName'>HerbName</label>
+    <input type='text' class='form-control' name='HerbName' value=".$row['HerbName'].">
+      </div>
+  <div class='form-group'>
+    <label for='Herbscience'>Herbscience</label>
+    <input type='text' class='form-control' name='Herbscience' value=".$row['Herbscience'].">
+      </div>
+ <div class='form-group'>
+    <label for='Snuff'>Snuff</label>
+    <input type='text' class='form-control' name='Snuff' value=".$row['Snuff'].">
+      </div>
+<div class='form-group'>
+    <label for='Wood'>Wood</label>
+    <input type='text' class='form-control' name='Wood' value=".$row['Wood'].">
+      </div>
+<div class='form-group'>
+    <label for='Dopey'>Dopey</label>
+    <input type='text' class='form-control' name='Dopey' value=".$row['Dopey'].">
+      </div>
+<div class='form-group'>
+    <label for='Bough'>Bough</label>
+    <input type='text' class='form-control' name='Bough' value=".$row['Bough'].">
+      </div>
+<div class='form-group'>
+    <label for='Fruit'>Fruit</label>
+    <input type='text' class='form-control' name='Fruit' value=".$row['Fruit'].">
+      </div>
+ <div class='form-group'>
+    <label for='Thorn'>Thorn</label>
+    <input type='text' class='form-control' name='Thorn' value=".$row['Thorn'].">
+      </div>
+ <div class='form-group'>
+    <label for='Smell'>Smell</label>
+    <input type='text' class='form-control' name='Smell' value=".$row['Smell'].">
+      </div>
+<div class='form-group'>
+    <label for='Sap'>Sap</label>
+    <input type='text' class='form-control' name='Sap' value=".$row['Sap'].">
+      </div>
+    <div class='form-group'>
+    <label for='Itching'>Itching</label>
+    <input type='text' class='form-control' name='Itching' value=".$row['Itching'].">
+      </div>
+<div class='form-group'>
+    <label for='Tubercrop'>Tuber crop</label>
+    <input type='text' class='form-control' name='Tubercrop' value=".$row['Tubercrop'].">
+      </div>
+<div class='form-group'>
+    <label for='HerbType'>Herb Type</label>
+    <input type='text' class='form-control' name='HerbType'value=".$row['HerbType'].">
+      </div>
+
+<div class='form-group'>
+        <label for='Properties'>Properties</label>
+        <textarea class='form-control' name='Properties' rows='4'>".$row['Properties']."</textarea>
+        </div>
+
+
+<div class='form-group'>
+    <label for='SeasonID'>SeasonID</label>
+    <input type='text' class='form-control' name='SeasonID'value=".$row['SeasonID'].">
+      </div>
+
+<div class='form-group'>
+    <label for='HerbfamilyID'>HerbfamilyID</label>
+    <input type='text' class='form-control' name='HerbfamilyID'value=".$row['HerbfamilyID'].">
+      </div>
+
+
+
+
+
+
+
+    ";
+
+    }
+    mysqli_close($conn);
+    ?>
+    <button type="submit" class="btn btn-outline-secondary">แก้ไขข้อมูล</button>
+    </form>
+    <br>
+    <a href="reportherbadmin.php" class="btn btn-outline-primary">กลับหน้าเดิม</a>
+    </div>
+    <br>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+   <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.5.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</php>
